@@ -3,6 +3,7 @@ const path = require('path');
 const mongoose = require ('mongoose');
 const ejsMate = require('ejs-mate');
 const methodOverride = require('method-override');
+const Tile = require('./models/tile');
 
 mongoose.connect('mongodb://127.0.0.1:27017/timon-tools');
 const db = mongoose.connection;
@@ -20,9 +21,10 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({extended: true}));
 app.use(methodOverride('_method'));
 
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
+    const tiles = await Tile.find({});
     console.log("Homepage Connected");
-    res.render("index");
+    res.render("index", {tiles});
 });
 
 app.get('/about', (req, res) => {
@@ -31,7 +33,7 @@ app.get('/about', (req, res) => {
 });
 
 app.get('/music', (req, res) => {
-    console.log("Homepage Connected");
+    console.log("Music page Connected");
     res.render("music/index");
 });
 

@@ -1,17 +1,14 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const tileSchema = new Schema ({
-    document_ids: [],
+const TileSchema = new Schema ({
     title: String,
     description: String,
     category: String,
-    script: String,
     rating: {
-        likes: Number,
-        dislikes: Number,
-        votes: Number,
+        likes: {type: Number, default: 0, min: 0},
+        votes: {type: Number, default: 0, min: 0}
     }
 });
 
-module.exports('Tile', tileSchema);
+module.exports = mongoose.model('Tile', TileSchema);
